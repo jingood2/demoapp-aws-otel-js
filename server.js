@@ -48,30 +48,21 @@ function handleRequest(req, res) {
   const requestStartTime = new Date().getMilliseconds();
   try {
     if (req.url === '/') {
-      if (shouldSampleAppLog) {
-        console.log("Responding to /");
-      }
-
+      console.log("Responding to /");
       res.end('healthcheck');
     }
 
     else if (req.url === '/aws-sdk-call') {
       const s3 = new AWS.S3();
       s3.listBuckets(() => {
-        if (shouldSampleAppLog) {
-          console.log("Responding to /aws-sdk-call");
-        }
-
+        console.log("Responding to /aws-sdk-call");
         res.end(getTraceIdJson());
       });
     }
 
     else if (req.url === '/outgoing-http-call') {
       http.get('http://aws.amazon.com', () => {
-        if (shouldSampleAppLog) {
-          console.log("Responding to /outgoing-http-call");
-        }
-
+      	console.log("Responding to /outgoing-http-call");
         res.end(getTraceIdJson());
         emitsPayloadMetric(res._contentLength + mimicPayLoadSize(), '/outgoing-http-call', res.statusCode);
         emitReturnTimeMetric(new Date().getMilliseconds() - requestStartTime, '/outgoing-http-call', res.statusCode);
