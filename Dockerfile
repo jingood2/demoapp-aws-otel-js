@@ -6,4 +6,6 @@ COPY . .
 
 RUN npm install
 
+ENV LISTEN_ADDRESS 8080
+
 CMD ["node", "server.js" ]
