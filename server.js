@@ -36,7 +36,7 @@ const shouldSampleAppLog = (process.env.SAMPLE_APP_LOG_LEVEL || "INFO") == "INFO
 function startServer(address) {
   const [hostname, port] = address.split(':');
   const server = http.createServer(handleRequest);
-  server.listen(port, hostname, (err) => {
+  server.listen(port, (err) => {
     if (err) {
       throw err;
     }
